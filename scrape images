@@ -443,7 +443,95 @@ if __name__ == "__main__":
         
         
     
-  
+  def generate_image_links(query):
+  request=preprocess_request(query)
+  j=0
+  for i in request:
+    keyword=i
+    url = 'https://image.baidu.com/search/flip?tn=baiduimage&ie=utf-8&word='+keyword+'&ct=201326592&v=flip'
+    result = requests.get(url)
+    html = result.text
+    pic_url = re.findall('"objURL":"(.*?)",',html,re.S)
+
+    for k in range(0,5):
+        print(pic_url[k])
+        try:
+            pic= requests.get(pic_url[k], timeout=10)
+        except requests.exceptions.ConnectionError:
+            print ('exception')
+            continue
+
+        string = 'img-'+str(j) + '.jpg'
+        fp = open(string,'wb')
+        fp.write(pic.content)
+        fp.close()
+        j += 1
+        
+        
+        
+      query_article=text
+generate_image_links(query_article)
+
+
+
+def generate_image_links(query):
+  request=preprocess_request(query)
+  j=0
+  for i in request:
+    keyword=i
+    keyword=preprocess_query(keyword)
+    url = 'https://www.google.com/search?q=' + keyword + '&client=opera&hs=cTQ&source=lnms&tbm=isch&sa=X&ved=0ahUKEwig3LOx4PzKAhWGFywKHZyZAAgQ_AUIBygB&biw=1920&bih=982'
+    result = requests.get(url)
+    html = result.text
+    soup = BeautifulSoup(html, 'html.parser')
+    pic_url=soup.find_all('img')
+    for k in range(0,9):
+      link=pic_url[k].get('src')
+      print(link)
+      try:
+        pic= requests.get(link, timeout=10)
+      except requests.exceptions.ConnectionError:
+        print ('exception')
+        continue
+      except:
+        continue
+      string = 'img-'+str(j) + '.jpg'
+      fp = open(string,'wb')
+      fp.write(pic.content)
+      fp.close()
+      j += 1
+      
+      
+   import re
+   
+   
+  query_article=text
+generate_image_links(query_article)
+
+def generate_image_links(query):
+  request=preprocess_request(query)
+  j=0
+  for i in request:
+    keyword=i
+    url = 'https://www.google.com/search?q=' + keyword + '&client=opera&hs=cTQ&source=lnms&tbm=isch&sa=X&ved=0ahUKEwig3LOx4PzKAhWGFywKHZyZAAgQ_AUIBygB&biw=1920&bih=982'
+    result = requests.get(url)
+    html = result.text
+    pic_url = re.findall('"objURL":"(.*?)",',html,re.S)
+
+    for k in range(0,9):
+        print(pic_url[k])
+        try:
+            pic= requests.get(pic_url[k], timeout=10)
+        except requests.exceptions.ConnectionError:
+            print ('exception')
+            continue
+
+        string = 'img-'+str(j) + '.jpg'
+        fp = open(string,'wb')
+        fp.write(pic.content)
+        fp.close()
+        j += 1
+
     
 
   
